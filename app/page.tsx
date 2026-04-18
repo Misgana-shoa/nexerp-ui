@@ -4,7 +4,7 @@ import { useState, ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
-export default function Login(): JSX.Element {
+export default function Login(){
   const router = useRouter();
 
   const [email, setEmail] = useState("");
