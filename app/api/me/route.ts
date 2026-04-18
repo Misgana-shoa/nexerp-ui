@@ -5,7 +5,7 @@ export async function GET(req: NextRequest) {
     const cookie = req.headers.get("cookie");
 
     const res = await fetch(
-      "http://127.0.0.1:8080/api/method/frappe.auth.get_logged_user",
+      `${process.env.ERP_URL}/api/method/frappe.auth.get_logged_user`,
       {
         headers: {
           Cookie: cookie || "",

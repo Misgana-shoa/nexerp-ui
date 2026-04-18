@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export async function GET(req: Request) {
   try {
     const res = await fetch(
-      "http://127.0.0.1:8080/api/resource/Supplier?fields=[\"name\",\"supplier_name\",\"email_id\",\"mobile_no\"]",
+      `${process.env.ERP_URL}/api/resource/Supplier?fields=[\"name\",\"supplier_name\",\"email_id\",\"mobile_no\"]`,
       {
         method: "GET",
         headers: {

@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export async function GET(req: Request) {
   try {
     const res = await fetch(
-      `http://127.0.0.1:8080/api/resource/Item Group?fields=["name"]&limit_page_length=200`,
+      `${process.env.ERP_URL}/api/resource/Item Group?fields=["name"]&limit_page_length=200`,
       {
         headers: {
           Cookie: req.headers.get("cookie") || "",

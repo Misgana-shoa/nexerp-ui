@@ -5,7 +5,7 @@ export async function POST(req: Request) {
     const body = await req.json();
 
     const res = await fetch(
-      "http://127.0.0.1:8080/api/resource/Customer",
+      `${process.env.ERP_URL}/api/resource/Customer`,
       {
         method: "POST",
         headers: {

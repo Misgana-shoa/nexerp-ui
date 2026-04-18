@@ -161,7 +161,8 @@ export default function ProductModal({
         {/* Footer */}
         <div className="flex justify-end gap-4 px-6 py-4 border-t border-zinc-700">
 
-          <button onClick={onClose}>
+          <button onClick={onClose} 
+          className="px-6 py-2 rounded-lg border border-zinc-600 text-zinc-300 hover:bg-zinc-700">
             Cancel
           </button>
 

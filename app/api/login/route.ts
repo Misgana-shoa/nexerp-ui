@@ -4,7 +4,7 @@ export async function POST(req: NextRequest) {
   try {
     const { email, password } = await req.json();
 
-    const erpRes = await fetch("http://127.0.0.1:8080/api/method/login", {
+    const erpRes = await fetch(`${process.env.ERP_URL}/api/method/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
