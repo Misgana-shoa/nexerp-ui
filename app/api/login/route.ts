@@ -4,7 +4,16 @@ export async function POST(req: NextRequest) {
   try {
     const { email, password } = await req.json();
 
-    const erpRes = await fetch(`${process.env.ERP_URL}/api/method/login`, {
+    const ERP_URL = process.env.ERP_URL;
+
+    if (!ERP_URL) {
+      return NextResponse.json(
+        { message: "ERP_URL not configured" },
+        { status: 500 }
+      );
+    }
+
+    const erpRes = await fetch(`${ERP_URL}/api/method/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -13,21 +22,47 @@ export async function POST(req: NextRequest) {
         usr: email,
         pwd: password,
       }),
+      redirect: "manual",
     });
 
-    const data = await erpRes.json();
+    const text = await erpRes.text();
 
-    const response = NextResponse.json(data);
+    let data: any = {};
+    try {
+      data = JSON.parse(text);
+    } catch {
+      data = { raw: text };
+    }
 
-    // ✅ SAVE LOGIN SESSION (VERY IMPORTANT)
+    if (!erpRes.ok) {
+      return NextResponse.json(
+        {
+          message: "Login failed",
+          error: data,
+        },
+        { status: erpRes.status }
+      );
+    }
+
+    const response = NextResponse.json({
+      message: "Logged In",
+      ...data,
+    });
+
+    // Forward ERPNext cookies to browser
     const cookie = erpRes.headers.get("set-cookie");
+
     if (cookie) {
       response.headers.set("set-cookie", cookie);
     }
 
     return response;
   } catch (error) {
-    console.error(error);
-    return new NextResponse("Login failed", { status: 500 });
+    console.error("Login Error:", error);
+
+    return NextResponse.json(
+      { message: "Server Error" },
+      { status: 500 }
+    );
   }
 }
