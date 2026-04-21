@@ -163,7 +163,7 @@ export default function ProductTable() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white w-full max-w-[1200px] mx-auto px-3 md:px-5 lg:px-6 py-5 overflow-x-hidden">
+    <div className="min-h-screen bg-black text-white w-full max-w-300 mx-auto px-3 md:px-5 lg:px-6 py-5 overflow-x-hidden">
       {/* HEADER */}
       <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between mb-6 w-full">
         <h1 className="text-3xl md:text-4xl font-bold">
@@ -398,7 +398,7 @@ function Stat({
   return (
     <motion.div
       whileHover={{ y: -2 }}
-      className="bg-zinc-800 border border-zinc-700 rounded-3xl p-7 min-h-[170px] w-full"
+      className="bg-zinc-800 border border-zinc-700 rounded-3xl p-7 min-h-42.5 w-full"
     >
       <p className="text-zinc-400 text-lg">{title}</p>
 
