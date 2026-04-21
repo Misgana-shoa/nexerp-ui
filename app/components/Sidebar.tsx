@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import {
   LayoutDashboard,
   Users,
@@ -33,6 +35,7 @@ type ItemProps = {
   activeTab: string;
   setActiveTab: (tab: string) => void;
   iconColor?: string;
+  isOpen: boolean;
 };
 
 function SidebarItem({
@@ -42,6 +45,7 @@ function SidebarItem({
   activeTab,
   setActiveTab,
   iconColor = "text-zinc-400",
+  isOpen,
 }: ItemProps) {
   const isActive = activeTab === tab;
 
@@ -74,16 +78,18 @@ function SidebarItem({
       </div>
 
       <span
-        className="
-          hidden group-hover:block
+        className={`
           whitespace-nowrap text-sm font-semibold text-zinc-300
-        "
+          transition-all duration-200
+          ${isOpen ? "block" : "hidden"}
+        `}
       >
         {label}
       </span>
     </button>
   );
 }
+
 
 function Section({
   short,
@@ -105,17 +111,20 @@ function Section({
   );
 }
 
+
 export default function Sidebar({
   activeTab,
   setActiveTab,
 }: SidebarProps) {
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
   return (
     <aside
+      onClick={() => setIsMobileOpen(true)}
       className="
         group
         fixed left-0 top-0 z-50
         h-screen
-        w-16 hover:w-64
+        w-16 hover:w-64 md:hover:w-64
         bg-black
         border-r border-white/10
         overflow-y-auto
@@ -126,11 +135,11 @@ export default function Sidebar({
       <div
         className="
           h-16 flex items-center
-          justify-center group-hover:justify-start
+          justify-center group-hover:justify-start md:group-hover:justify-start
           px-4 border-b border-white/10
         "
       >
-        <span className="text-xl font-bold text-white group-hover:hidden">
+        <span className="text-xl font-bold text-white group-hover:hidden md:group-hover:hidden">
           P
         </span>
 
@@ -151,7 +160,7 @@ export default function Sidebar({
         >
           <Sun size={18} className="text-yellow-400" />
 
-          <span className="hidden group-hover:block text-sm font-semibold text-zinc-300">
+          <span className={`text-sm font-semibold text-zinc-300 ${isMobileOpen ? "block" : "hidden md:block md:group-hover:block"}`}>
             Day Mode
           </span>
         </button>
@@ -166,11 +175,16 @@ export default function Sidebar({
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           iconColor="text-blue-400"
+          isOpen={isMobileOpen}
         />
       </div>
 
       {/* PEOPLE */}
       <Section short="PPL" full="PEOPLE" />
+      <div className="mt-6 mb-2 px-4 text-[10px] text-zinc-500 uppercase tracking-widest">
+        <span className="block group-hover:hidden md:hidden text-center">PPL</span>
+        <span className="hidden group-hover:block md:block">PEOPLE</span>
+      </div>
 
       <div className="px-2 space-y-1">
         <SidebarItem
@@ -180,6 +194,7 @@ export default function Sidebar({
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           iconColor="text-emerald-400"
+          isOpen={isMobileOpen}
         />
 
         <SidebarItem
@@ -189,6 +204,7 @@ export default function Sidebar({
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           iconColor="text-purple-400"
+          isOpen={isMobileOpen}
         />
       </div>
 
@@ -202,6 +218,7 @@ export default function Sidebar({
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           iconColor="text-blue-400"
+          isOpen={isMobileOpen}
         />
 
         <SidebarItem
@@ -210,6 +227,7 @@ export default function Sidebar({
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           iconColor="text-indigo-400"
+          isOpen={isMobileOpen}
         />
 
         <SidebarItem
@@ -218,6 +236,7 @@ export default function Sidebar({
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           iconColor="text-yellow-400"
+          isOpen={isMobileOpen}
         />
 
         <SidebarItem
@@ -226,6 +245,7 @@ export default function Sidebar({
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           iconColor="text-pink-400"
+          isOpen={isMobileOpen}
         />
 
         <SidebarItem
@@ -234,6 +254,7 @@ export default function Sidebar({
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           iconColor="text-emerald-400"
+          isOpen={isMobileOpen}
         />
 
         <SidebarItem
@@ -242,6 +263,7 @@ export default function Sidebar({
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           iconColor="text-orange-400"
+          isOpen={isMobileOpen}
         />
 
         <SidebarItem
@@ -250,6 +272,7 @@ export default function Sidebar({
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           iconColor="text-teal-400"
+          isOpen={isMobileOpen}
         />
       </div>
 
@@ -263,6 +286,7 @@ export default function Sidebar({
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           iconColor="text-blue-400"
+          isOpen={isMobileOpen}
         />
 
         <SidebarItem
@@ -271,6 +295,7 @@ export default function Sidebar({
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           iconColor="text-indigo-400"
+          isOpen={isMobileOpen}
         />
 
         <SidebarItem
@@ -279,6 +304,7 @@ export default function Sidebar({
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           iconColor="text-yellow-400"
+          isOpen={isMobileOpen}
         />
 
         <SidebarItem
@@ -287,6 +313,7 @@ export default function Sidebar({
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           iconColor="text-orange-400"
+          isOpen={isMobileOpen}
         />
       </div>
 
@@ -301,6 +328,7 @@ export default function Sidebar({
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           iconColor="text-teal-400"
+          isOpen={isMobileOpen}
         />
       </div>
 
@@ -314,6 +342,7 @@ export default function Sidebar({
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           iconColor="text-blue-400"
+          isOpen={isMobileOpen}
         />
 
         <SidebarItem
@@ -322,6 +351,7 @@ export default function Sidebar({
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           iconColor="text-purple-400"
+          isOpen={isMobileOpen}
         />
       </div>
 
@@ -335,6 +365,7 @@ export default function Sidebar({
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           iconColor="text-emerald-400"
+          isOpen={isMobileOpen}
         />
 
         <SidebarItem
@@ -343,6 +374,7 @@ export default function Sidebar({
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           iconColor="text-yellow-400"
+          isOpen={isMobileOpen}
         />
       </div>
 
@@ -356,6 +388,7 @@ export default function Sidebar({
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           iconColor="text-pink-400"
+          isOpen={isMobileOpen}
         />
       </div>
     </aside>
