@@ -22,17 +22,9 @@ export async function POST(req: NextRequest) {
         usr: email,
         pwd: password,
       }),
-      redirect: "manual",
     });
 
-    const text = await erpRes.text();
-
-    let data: any = {};
-    try {
-      data = JSON.parse(text);
-    } catch {
-      data = { raw: text };
-    }
+    const data = await erpRes.json().catch(() => ({}));
 
     if (!erpRes.ok) {
       return NextResponse.json(
@@ -46,14 +38,14 @@ export async function POST(req: NextRequest) {
 
     const response = NextResponse.json({
       message: "Logged In",
-      ...data,
+      user: data.message || data,
     });
 
-    // Forward ERPNext cookies to browser
-    const cookie = erpRes.headers.get("set-cookie");
+    // IMPORTANT: forward ERPNext session cookie
+    const setCookie = erpRes.headers.get("set-cookie");
 
-    if (cookie) {
-      response.headers.set("set-cookie", cookie);
+    if (setCookie) {
+      response.headers.append("set-cookie", setCookie);
     }
 
     return response;
