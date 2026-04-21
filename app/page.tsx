@@ -71,9 +71,7 @@ export default function Login() {
   };
 
   const handleEnter = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      handleLogin();
-    }
+    if (e.key === "Enter") handleLogin();
   };
 
   return (
@@ -83,45 +81,37 @@ export default function Login() {
       transition={{ duration: 0.4 }}
       className="relative min-h-screen overflow-hidden bg-[#111827] text-white"
     >
-      {/* Left Glow */}
-      <div
-        className="absolute left-10 md:left-68 top-0 h-full w-px bg-teal-300/40
-        shadow-[0_0_25px_rgba(45,212,191,0.9),0_0_60px_rgba(45,212,191,0.6)]"
-      />
+      {/* Glow Lines */}
+      <div className="hidden md:block absolute left-37 lg:left-47 top-0 h-full w-px bg-teal-300/40 shadow-[0_0_25px_rgba(45,212,191,0.9),0_0_60px_rgba(45,212,191,0.6)]" />
 
-      {/* Right Glow */}
-      <div
-        className="absolute right-10 md:right-56 top-0 h-full w-px bg-teal-300/40
-        shadow-[0_0_25px_rgba(45,212,191,0.9),0_0_60px_rgba(45,212,191,0.6)]"
-      />
+      <div className="hidden md:block absolute right-56 lg:right-78 top-0 h-full w-px bg-teal-300/40 shadow-[0_0_25px_rgba(45,212,191,0.9),0_0_60px_rgba(45,212,191,0.6)]" />
 
-         {/* CENTER */}
-<div className="min-h-screen w-full flex items-stretch justify-center px-0 md:px-4">
-  <div
-    className="
-      w-full max-w-6xl mx-auto
-      grid grid-cols-1 md:grid-cols-2
-      min-h-screen
-      shadow-2xl border border-white/10
-      overflow-hidden relative left-52
-    "
-  >
+      {/* Main Layout */}
+      <div className="min-h-screen w-full flex items-stretch justify-center px-0 md:px-4">
+        <div
+          className="
+            w-full md:w-[80%] lg:w-[76%] xl:w-[72%]
+            mx-auto grid grid-cols-1 md:grid-cols-2
+            min-h-screen shadow-2xl border border-white/10
+            overflow-hidden relative left-0
+            "
+          >
           {/* LEFT */}
-          <div className="p-6 md:p-12 bg-[#1f2937]/80 flex items-center justify-center min-h-screen md:min-h-0">
+          <div className="bg-[#1f2937]/80 flex items-center justify-center p-6 sm:p-8 md:p-12 min-h-screen md:min-h-0">
             <div className="w-full max-w-md">
               <p className="text-sm tracking-[0.35em] text-teal-300 uppercase">
                 PrimaERP
               </p>
 
-              <h1 className="mt-4 text-4xl font-bold">
-                Welcome Back
+              <h1 className="mt-4 text-3xl sm:text-4xl font-bold">
+                Prima EV Manufacturing
               </h1>
 
               <p className="mt-3 text-sm text-zinc-400">
                 Sign in to continue to your dashboard.
               </p>
 
-              <div className="mt-10 space-y-5">
+              <div className="mt-8 space-y-5">
                 <div>
                   <label className="text-sm text-teal-300">
                     Email
@@ -192,21 +182,28 @@ export default function Login() {
 
           {/* RIGHT */}
           <div
-  className="hidden md:flex items-center justify-center border-l border-white/10 bg-white/5
-bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-black p-10 min-h-screen md:min-h-0"
->
-            <div className="w-full max-w-3xl p-10 text-center backdrop-blur-xl">
-              <p className="text-sm tracking-[0.4em] text-teal-300 uppercase">
+            className="
+              flex items-center justify-center
+              border-t md:border-t-0 md:border-l border-white/10
+              bg-white/5
+              bg-gradient-to-br
+              from-teal-500/10 via-emerald-500/10 to-black
+              p-6 sm:p-8 lg:p-12
+              min-h-[45vh] md:min-h-screen
+            "
+          >
+            <div className="w-full max-w-3xl p-4 sm:p-8 text-center backdrop-blur-xl">
+              <p className="text-xs sm:text-sm tracking-[0.4em] text-teal-300 uppercase">
                 ERP Dashboard
               </p>
 
-              <h2 className="mt-6 text-5xl font-bold leading-tight">
+              <h2 className="mt-4 sm:mt-6 text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
                 WELCOME
                 <br />
                 BACK!
               </h2>
 
-              <p className="mt-6 text-zinc-400">
+              <p className="mt-4 sm:mt-6 text-sm sm:text-base text-zinc-400">
                 Manage products, invoices, customers and growth in one place.
               </p>
             </div>
