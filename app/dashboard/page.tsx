@@ -21,9 +21,10 @@ import {
 import Modal from "../components/Modal";
 import VendorModal from "../components/VendorModal";
 import ProductModal from "../components/ProductModal";
-import CustomerTable from "../components/CustomerTable";
-import VendorTable from "../components/VendorTable";
-import ProductTable from "../components/ProductTable";
+import SaleModal from "../components/SaleModal";
+import CustomerPage from "../customer/page";
+import VendorPage from "../Vendor/page";
+import ProductPage from "../Product/page";
 
 type Stats = {
   outstanding: number;
@@ -66,6 +67,20 @@ export default function Dashboard() {
     costPrice: "",
     item_group: "",
   });
+
+  // SALE MODAL STATE
+const [openSaleModal, setOpenSaleModal] = useState(false);
+
+const [sale, setSale] = useState({
+  name: "",
+  type: "Product",
+  sku: "",
+  sellingPrice: "",
+  costPrice: "",
+  item_group: "",
+});
+
+
 
   const [time, setTime] = useState("");
   const [date, setDate] = useState("");
@@ -225,6 +240,37 @@ export default function Dashboard() {
     }
   };
 
+
+  // ✅ CREATE SALE
+const createSale = async () => {
+  const res = await fetch("/api/sale", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(sale),
+  });
+
+  if (res.ok) {
+    alert("✅ Sale Created");
+
+    setOpenSaleModal(false);
+
+    setSale({
+      name: "",
+      type: "Product",
+      sku: "",
+      sellingPrice: "",
+      costPrice: "",
+      item_group: "",
+    });
+
+    setActiveTab("sales");
+  } else {
+    alert("❌ Failed");
+  }
+};
+
   return (
     <div className="layout font-serif">
       {/* ✅ SIDEBAR */}
@@ -355,7 +401,10 @@ export default function Dashboard() {
               <div className="actions">
                 <div
                   className="flex items-center gap-2 text-emerald-400 text-sm font-semibold bg-emerald-500/10 border border-emerald-500/20 px-6 py-3 rounded-md backdrop-blur-sm cursor-pointer hover:scale-105 transition shadow-[0_0_8px_rgba(16,185,129,0.25)]"
-                  onClick={() => setOpenCustomerModal(true)}
+                  onClick={() => {
+                                    setActiveTab("customers");   // 👈 switches page
+                                    setOpenCustomerModal(true);   // 👈 opens modal
+                                 }}
                 >
                   <UserPlus size={18} />
                   <span className="whitespace-nowrap">
@@ -365,7 +414,10 @@ export default function Dashboard() {
 
                 <div
                   className="flex items-center gap-2 text-purple-400 text-sm font-semibold bg-purple-500/10 border border-purple-500/20 px-6 py-3 rounded-md backdrop-blur-sm cursor-pointer hover:scale-105 transition shadow-[0_0_8px_rgba(16,185,129,0.25)]"
-                  onClick={() => setOpenVendorModal(true)}
+                  onClick={() => {
+                    setActiveTab("vendors") 
+                    setOpenVendorModal(true);
+                  }}
                 >
                   <House size={18} />
                   <span className="whitespace-nowrap">
@@ -375,7 +427,9 @@ export default function Dashboard() {
 
                 <div
                   className="flex items-center gap-2 text-blue-400 text-sm font-semibold bg-blue-500/10 border border-blue-500/20 px-6 py-3 rounded-md backdrop-blur-sm cursor-pointer hover:scale-105 transition shadow-[0_0_8px_rgba(16,185,129,0.25)]"
-                  onClick={() => setOpenProductModal(true)}
+                  onClick={() => { setActiveTab("products")
+                    setOpenProductModal(true);
+                  }}  // 👈 opens modal
                 >
                   <Box />
                   <span className="whitespace-nowrap">
@@ -383,7 +437,11 @@ export default function Dashboard() {
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2 text-pink-400 text-sm font-semibold bg-pink-500/10 border border-pink-500/20 px-6 py-3 rounded-md backdrop-blur-sm shadow-[0_0_8px_rgba(16,185,129,0.25)]">
+                <div className="flex items-center gap-2 text-pink-400 text-sm font-semibold bg-pink-500/10 border border-pink-500/20 px-6 py-3 rounded-md backdrop-blur-sm shadow-[0_0_8px_rgba(16,185,129,0.25)]"
+                     onClick={() => { setActiveTab("sales") 
+                      setOpenSaleModal(true); 
+                    }} 
+                >
                   <FileSpreadsheet />
                   <span className="whitespace-nowrap">
                     Sale Bills
@@ -427,19 +485,19 @@ export default function Dashboard() {
         {/* TABLE PAGES */}
         {activeTab === "customers" && (
           <div className="mt-6">
-            <CustomerTable />
+            <CustomerPage />
           </div>
         )}
 
         {activeTab === "vendors" && (
           <div className="mt-6">
-            <VendorTable />
+            <VendorPage />
           </div>
         )}
 
         {activeTab === "products" && (
           <div className="mt-6">
-            <ProductTable />
+            <ProductPage />
           </div>
         )}
       </div>
@@ -467,6 +525,13 @@ export default function Dashboard() {
         onCreate={createProduct}
         product={product}
         setProduct={setProduct}
+      />
+      <SaleModal
+        open={openSaleModal}
+        onClose={() => setOpenSaleModal(false)}
+        onCreate={createSale}
+        sale={sale}
+        setSale={setSale}
       />
     </div>
   );

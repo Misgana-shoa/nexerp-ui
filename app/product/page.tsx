@@ -14,7 +14,7 @@ import {
   Download,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import ProductModal from "./ProductModal";
+import ProductModal from "../components/ProductModal";
 
 type Product = {
   name: string;

@@ -9,7 +9,7 @@ import {
   Download,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import Modal from "./Modal";
+import Modal from "../components/Modal";
 
 type Customer = {
   name: string;

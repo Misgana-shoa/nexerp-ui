@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Eye, Pencil, Trash2, Loader2, Plus, Download } from "lucide-react";
-import VendorModal from "./VendorModal";
+import VendorModal from "../components/VendorModal";
 
 type Vendor = {
   name: string;
