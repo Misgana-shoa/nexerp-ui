@@ -22,9 +22,12 @@ import Modal from "../components/Modal";
 import VendorModal from "../components/VendorModal";
 import ProductModal from "../components/ProductModal";
 import SaleModal from "../components/SaleModal";
+import PurchaseModal from "../components/PurchaseModal";
 import CustomerPage from "../customer/page";
-import VendorPage from "../Vendor/page";
-import ProductPage from "../Product/page";
+import VendorPage from "../vendor/page";
+import ProductPage from "../product/page";
+import SalePage from "../sale/page";
+import PurchasePage from "../purchase/page";
 
 type Stats = {
   outstanding: number;
@@ -73,12 +76,28 @@ const [openSaleModal, setOpenSaleModal] = useState(false);
 
 const [sale, setSale] = useState({
   name: "",
-  type: "Product",
-  sku: "",
-  sellingPrice: "",
-  costPrice: "",
-  item_group: "",
+  validDays: "",
+  items: "",
+  Qty: "",
+  price: "",
+  tax: "",
+  notes: "",
+  TermsConditions: ""
 });
+
+
+//Purchase Modal State
+const [openPurchaseModal, setOpenPurchaseModal] = useState(false);
+
+  const [purchase, setPurchase] = useState({
+    name: "",
+    expectedDelivery: "",
+    items: "Product",
+    Qty: "",
+    price: "",
+    tax: "",
+    notes: "",
+  });
 
 
 
@@ -242,7 +261,7 @@ const [sale, setSale] = useState({
 
 
   // ✅ CREATE SALE
-const createSale = async () => {
+  const createSale = async () => {
   const res = await fetch("/api/sale", {
     method: "POST",
     headers: {
@@ -258,11 +277,13 @@ const createSale = async () => {
 
     setSale({
       name: "",
-      type: "Product",
-      sku: "",
-      sellingPrice: "",
-      costPrice: "",
-      item_group: "",
+      validDays: "",
+      items: "",
+      Qty: "",
+      price: "",
+      tax: "",
+      notes: "",
+      TermsConditions: ""
     });
 
     setActiveTab("sales");
@@ -270,6 +291,38 @@ const createSale = async () => {
     alert("❌ Failed");
   }
 };
+
+// ✅ CREATE PURCHASE
+  const createPurchase = async () => {
+    const res = await fetch("/api/purchase", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(purchase),
+    });
+
+    if (res.ok) {
+      alert("✅ Purchase Created");
+
+      setOpenPurchaseModal(false);
+
+      setPurchase({
+        name: "",
+        expectedDelivery: "",
+        items: "Product",
+        Qty: "",
+        price: "",
+        tax: "",
+        notes: "",
+      });
+
+      setActiveTab("products");
+    } else {
+      alert("❌ Failed");
+    }
+  };
+
 
   return (
     <div className="layout font-serif">
@@ -448,7 +501,10 @@ const createSale = async () => {
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2 text-yellow-400 text-sm font-semibold bg-yellow-500/10 border border-yellow-500/20 px-6 py-3 rounded-md backdrop-blur-sm shadow-[0_0_8px_rgba(16,185,129,0.25)]">
+                <div className="flex items-center gap-2 text-yellow-400 text-sm font-semibold bg-yellow-500/10 border border-yellow-500/20 px-6 py-3 rounded-md backdrop-blur-sm shadow-[0_0_8px_rgba(16,185,129,0.25)]"
+                onClick={() => { setActiveTab("purchases") 
+                      setOpenPurchaseModal(true); 
+                    }} >
                   <AppWindow />
                   <span className="whitespace-nowrap">
                     Purchase Bill
@@ -500,6 +556,16 @@ const createSale = async () => {
             <ProductPage />
           </div>
         )}
+        {activeTab === "sales" && (
+          <div className="mt-6">
+            <SalePage />
+          </div>
+        )}
+        {activeTab === "purchases" && (
+          <div className="mt-6">
+            <PurchasePage />
+          </div>
+        )}
       </div>
 
       {/* MODALS */}
@@ -532,6 +598,13 @@ const createSale = async () => {
         onCreate={createSale}
         sale={sale}
         setSale={setSale}
+      />
+      <PurchaseModal
+        open={openPurchaseModal}
+        onClose={() => setOpenPurchaseModal(false)}
+        onCreate={createPurchase}
+        purchase={purchase}
+        setProduct={setPurchase}
       />
     </div>
   );

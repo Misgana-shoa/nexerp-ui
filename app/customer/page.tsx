@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import {
+import { Eye, Pencil, Trash2,
   Loader2,
   ChevronLeft,
   ChevronRight,
@@ -201,7 +201,7 @@ export default function CustomerTable() {
 
             <button
               onClick={() => setOpenCustomerModal(true)}
-              className="px-7 py-3 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center gap-2"
+              className="px-7 py-3 rounded-2xl bg-linear-to-r from-indigo-600 to-purple-600 flex items-center gap-2"
             >
               <Plus size={18} />
               Add Customer
@@ -240,6 +240,30 @@ export default function CustomerTable() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
+        {/* FILTER + SORT */}
+        <div className="space-y-4 mb-6">
+          <select
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            className="w-full h-16 rounded-2xl bg-zinc-900 border border-zinc-700 px-5 text-lg"
+          >
+            <option>All Customers</option>
+            <option>With Balance</option>
+            <option>No Balance</option>
+          </select>
+
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="w-full h-16 rounded-2xl bg-zinc-900 border border-zinc-700 px-5 text-lg"
+          >
+            <option>Sort: Recent</option>
+            <option>Sort: Name</option>
+            <option>Sort: Balance</option>
+            <option>Sort: Revenue</option>
+          </select>
+        </div>
+
 
         {/* TABLE */}
         <div className="rounded-3xl border border-zinc-800 overflow-hidden">
@@ -251,13 +275,14 @@ export default function CustomerTable() {
                 <th className="px-6 py-5 text-left">Invoices</th>
                 <th className="px-6 py-5 text-left">Revenue</th>
                 <th className="px-6 py-5 text-left">Balance</th>
+                <th className="px-6 py-5 text-left">Actions</th>
               </tr>
             </thead>
 
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan={5} className="py-14 text-center">
+                  <td colSpan={6} className="py-14 text-center">
                     <Loader2 className="animate-spin mx-auto" />
                   </td>
                 </tr>
@@ -267,7 +292,7 @@ export default function CustomerTable() {
                     <td className="px-6 py-6">
                       <div className="flex items-center gap-4">
                         <div
-                          className={`w-14 h-14 rounded-full bg-gradient-to-br ${
+                          className={`w-14 h-14 rounded-full bg-linear-to-br ${
                             avatarColors[i % avatarColors.length]
                           } flex items-center justify-center text-xl font-bold`}
                         >
@@ -295,6 +320,24 @@ export default function CustomerTable() {
                     </td>
                     <td className="px-6 py-6 text-orange-400">
                       ${c.balance.toLocaleString()}
+                    </td>
+                    <td className="px-6 py-6">
+                      <div className="flex gap-3">
+                        <button className="px-4 py-2 bg-blue-600 rounded-xl">
+                          <Eye size={16} />
+                          View
+                        </button>
+                    
+                        <button className="px-4 py-2 border border-zinc-600 rounded-xl">
+                          <Pencil size={16} />
+                          Edit
+                        </button>
+                    
+                        <button className="px-4 py-2 bg-red-600 rounded-xl">
+                          <Trash2 size={16} />
+                          Delete
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))

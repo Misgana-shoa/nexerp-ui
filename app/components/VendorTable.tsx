@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Eye, Pencil, Trash2, Loader2, Plus, Download } from "lucide-react";
-import VendorModal from "../components/VendorModal";
+import VendorModal from "./VendorModal";
 
 type Vendor = {
   name: string;
@@ -186,7 +186,7 @@ export default function VendorTable() {
 
             <button
               onClick={() => setOpenVendorModal(true)}
-              className="px-7 py-3 rounded-2xl bg-linear-to-r from-indigo-600 to-purple-600 flex items-center gap-2"
+              className="px-7 py-3 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center gap-2"
             >
               <Plus size={18} />
               Add Vendor
@@ -195,7 +195,7 @@ export default function VendorTable() {
         </div>
 
         {/* STATS */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-10">
           <Stat
             title="TOTAL VENDORS"
             value={totalVendors}
@@ -212,11 +212,6 @@ export default function VendorTable() {
             title="WITH BALANCE"
             value={withBalance}
             color="text-yellow-400"
-          />
-          <Stat
-            title="New This Month"
-            value={withBalance}
-            color="text-emerald-400"
           />
         </div>
 
@@ -258,8 +253,6 @@ export default function VendorTable() {
               <tr>
                 <th className="px-6 py-5 text-left">Vendor</th>
                 <th className="px-6 py-5 text-left">Phone</th>
-                <th className="px-6 py-5 text-left">Purchase Orders</th>
-                <th className="px-6 py-5 text-left">Total Spent</th>
                 <th className="px-6 py-5 text-left">Balance</th>
                 <th className="px-6 py-5 text-left">Actions</th>
               </tr>
@@ -268,13 +261,13 @@ export default function VendorTable() {
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan={6} className="py-14 text-center">
+                  <td colSpan={4} className="py-14 text-center">
                     <Loader2 className="animate-spin mx-auto" />
                   </td>
                 </tr>
               ) : filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="text-center py-10 text-zinc-500">
+                  <td colSpan={4} className="text-center py-10 text-zinc-500">
                     No vendors found
                   </td>
                 </tr>
@@ -287,7 +280,7 @@ export default function VendorTable() {
                     <td className="px-6 py-6">
                       <div className="flex items-center gap-4">
                         <div
-                          className={`w-14 h-14 rounded-full bg-linear-to-br ${
+                          className={`w-14 h-14 rounded-full bg-gradient-to-br ${
                             avatarColors[i % 3]
                           } flex items-center justify-center`}
                         >
@@ -307,14 +300,6 @@ export default function VendorTable() {
                       {v.mobile_no || "-"}
                     </td>
 
-                    <td className="px-6 py-6">
-                      {v.mobile_no || "-"}
-                    </td>
-
-                    <td className="px-6 py-6">
-                      {v.mobile_no || "-"}
-                    </td>
-
                     <td className="px-6 py-6 text-emerald-400 font-semibold">
                       ${(v.balance || 0).toLocaleString()}
                     </td>
@@ -323,17 +308,14 @@ export default function VendorTable() {
                       <div className="flex gap-3">
                         <button className="px-4 py-2 bg-blue-600 rounded-xl">
                           <Eye size={16} />
-                          View
                         </button>
 
                         <button className="px-4 py-2 border border-zinc-600 rounded-xl">
                           <Pencil size={16} />
-                          Edit
                         </button>
 
                         <button className="px-4 py-2 bg-red-600 rounded-xl">
                           <Trash2 size={16} />
-                          Delete
                         </button>
                       </div>
                     </td>

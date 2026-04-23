@@ -276,7 +276,7 @@ export default function ProductTable() {
             onChange={(e) => setTypeFilter(e.target.value)}
             className="w-full h-16 rounded-2xl bg-zinc-900 border border-zinc-700 px-4 text-lg outline-none"
           >
-            <option>All</option>
+            <option>All Types</option>
             <option>Products</option>
             <option>Services</option>
           </select>

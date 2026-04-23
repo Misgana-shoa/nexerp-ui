@@ -1,6 +1,6 @@
 "use client";
 
-import { X, ChevronDown, Notebook } from "lucide-react";
+import { X, ChevronDown } from "lucide-react";
 import { useState } from "react";
 
 type Item = {
@@ -152,21 +152,21 @@ export default function Modal({ open, onClose, onCreate }: Props) {
           </div>
 
           {/* TOTAL */}
-          <div className="p-6 bg-black rounded-2xl space-y-3">
-            <div>Subtotal: ${subtotal.toFixed(0)}</div>
-            <div>Tax: ${taxTotal.toFixed(0)}</div>
-
-            <input
-              value={discount}
-              onChange={(e) => setDiscount(e.target.value)}
-              placeholder="Discount"
-              className="w-40 px-3 py-2 bg-zinc-800 rounded-xl"
-            />
-
-            <div className="text-2xl font-bold text-emerald-400">
-              Total: ${total.toFixed(0)}
+          <div className="rounded-2xl bg-black px-6 py-7 mb-10">
+          <div className="space-y-5 text-[20px]">
+            <div className="flex justify-between"><span className="text-[#e0c4a7]">Subtotal</span><span>Rs 0.00</span></div>
+            <div className="flex justify-between"><span className="text-[#e0c4a7]">Tax</span><span>Rs 0.00</span></div>
+            <div className="flex justify-between items-center">
+              <span className="text-[#e0c4a7]">Discount</span>
+              <input defaultValue="0" className="w-[180px] h-11 rounded-md bg-[#3a3a3a] border border-zinc-600 px-3 text-right outline-none" />
             </div>
           </div>
+
+          <div className="border-t border-[#25465f] mt-6 pt-5 flex justify-between items-center">
+            <span className="text-[24px] font-semibold">Total</span>
+            <span className="text-[28px] font-bold text-orange-400">Rs 0.00</span>
+          </div>
+        </div>
 
           {/* NOTES + TERMS */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
