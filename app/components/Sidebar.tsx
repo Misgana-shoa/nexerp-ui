@@ -215,7 +215,8 @@ export default function Sidebar({
       <div className="px-2 space-y-1">
         <SidebarItem
           icon={<ClipboardList size={20} />}
-          label="Orders"
+          label="Quotations"
+          tab="quotations"
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           iconColor="text-blue-400"
